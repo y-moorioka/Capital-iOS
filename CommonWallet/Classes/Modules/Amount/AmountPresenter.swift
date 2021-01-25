@@ -406,17 +406,18 @@ final class AmountPresenter {
     }
 
     private func validateAndReportLimitConstraints(for amount: Decimal) -> Bool {
+        let limit = payload.receiveInfo.isCashier ?? false ? payload.receiveInfo.amount?.decimalValue : 0
         guard amount >= transferViewModelFactory.minimumLimit(for: selectedAsset,
                                                               sender: account.accountId,
                                                               receiver: payload.receiveInfo.accountId,
-                                                              amount: payload.receiveInfo.amount?.decimalValue) else {
+                                                              amount: limit) else {
             let locale = localizationManager?.selectedLocale ?? Locale.current
             let receiverId = payload.receiveInfo.accountId
             let message = transferViewModelFactory.createMinimumLimitErrorDetails(for: selectedAsset,
                                                                                   sender: account.accountId,
                                                                                   receiver: receiverId,
                                                                                   locale: locale,
-                                                                                  amount: payload.receiveInfo.amount?.decimalValue)
+                                                                                  amount: limit)
             view?.showError(message: message)
             return false
         }
