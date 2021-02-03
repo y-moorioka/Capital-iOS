@@ -19,14 +19,14 @@ public struct ReceiveInfo {
     public var assetId: IRAssetId?
     public var amount: AmountDecimal?
     public var details: String?
-    public var isCashier: Bool?
+    public var miniLimit: AmountDecimal?
 
-    public init(accountId: IRAccountId, assetId: IRAssetId?, amount: AmountDecimal?, details: String?, isCashier: Bool = false) {
+    public init(accountId: IRAccountId, assetId: IRAssetId?, amount: AmountDecimal?, details: String?, miniLimit: AmountDecimal? = nil) {
         self.accountId = accountId
         self.assetId = assetId
         self.amount = amount
         self.details = details
-        self.isCashier = isCashier
+        self.miniLimit = miniLimit
     }
 }
 
