@@ -13,6 +13,7 @@ public protocol TransactionCellStyleProtocol {
     var increaseAmountIcon: UIImage? { get }
     var decreaseAmountIcon: UIImage? { get }
     var separatorColor: UIColor { get }
+    var timestamp: WalletTextStyleProtocol { get }
 }
 
 public struct TransactionCellStyle: TransactionCellStyleProtocol {
@@ -23,6 +24,7 @@ public struct TransactionCellStyle: TransactionCellStyleProtocol {
     public var increaseAmountIcon: UIImage?
     public var decreaseAmountIcon: UIImage?
     public var separatorColor: UIColor
+    public var timestamp: WalletTextStyleProtocol
 
     public init(backgroundColor: UIColor,
                 title: WalletTextStyleProtocol,
@@ -30,7 +32,8 @@ public struct TransactionCellStyle: TransactionCellStyleProtocol {
                 statusStyleContainer: WalletTransactionStatusStyleContainerProtocol,
                 increaseAmountIcon: UIImage?,
                 decreaseAmountIcon: UIImage?,
-                separatorColor: UIColor) {
+                separatorColor: UIColor,
+                timestamp: WalletTextStyleProtocol) {
         self.backgroundColor = backgroundColor
         self.title = title
         self.amount = amount
@@ -38,6 +41,7 @@ public struct TransactionCellStyle: TransactionCellStyleProtocol {
         self.increaseAmountIcon = increaseAmountIcon
         self.decreaseAmountIcon = decreaseAmountIcon
         self.separatorColor = separatorColor
+        self.timestamp = timestamp
     }
 }
 
@@ -49,6 +53,7 @@ extension TransactionCellStyle {
                                     statusStyleContainer: style.statusStyleContainer,
                                     increaseAmountIcon: style.amountChangeStyle.increase,
                                     decreaseAmountIcon: style.amountChangeStyle.decrease,
-                                    separatorColor: style.thinBorderColor)
+                                    separatorColor: style.thinBorderColor,
+                                    timestamp: WalletTextStyle(font: style.smallFont, color: style.captionTextColor))
     }
 }

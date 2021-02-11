@@ -12,6 +12,7 @@ public protocol TransactionItemViewModelProtocol: class {
     var incoming: Bool { get }
     var status: AssetTransactionStatus { get }
     var icon: UIImage? { get }
+    var timestamp: String { get }
 }
 
 final class TransactionItemViewModel: TransactionItemViewModelProtocol {
@@ -21,6 +22,7 @@ final class TransactionItemViewModel: TransactionItemViewModelProtocol {
     var incoming: Bool = false
     var status: AssetTransactionStatus = .commited
     var icon: UIImage?
+    var timestamp: String = ""
     
     init(transactionId: String) {
         self.transactionId = transactionId

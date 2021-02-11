@@ -37,6 +37,12 @@ final class HistoryViewModelFactory {
         item.dateStyle = .long
         return item
     }()
+    private lazy var timestampFormatter: DateFormatter = {
+        let item = DateFormatter()
+        item.dateStyle = .long
+        item.timeStyle = .short
+        return item
+    }()
 
     weak var delegate: HistoryViewModelFactoryDelegate?
 
@@ -113,6 +119,9 @@ final class HistoryViewModelFactory {
         } else {
             viewModel.amount = amountDisplayString
         }
+        
+        let timestamp = Date(timeIntervalSince1970: TimeInterval(transaction.timestamp))
+        viewModel.timestamp = createdTimestamp(for: timestamp, locale: locale)
 
         return viewModel
     }
@@ -131,6 +140,11 @@ extension HistoryViewModelFactory: HistoryViewModelFactoryProtocol {
         }
         dateFormatter.locale = locale
         return dateFormatter.string(from: date)
+    }
+    
+    private func createdTimestamp(for date: Date, locale: Locale) -> String {
+        timestampFormatter.locale = locale
+        return timestampFormatter.string(from: date)
     }
     
     func merge(newItems: [AssetTransactionData],

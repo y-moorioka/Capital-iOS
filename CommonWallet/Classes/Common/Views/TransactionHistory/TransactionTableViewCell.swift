@@ -17,7 +17,8 @@ final class TransactionTableViewCell: UITableViewCell {
     @IBOutlet private var statusImageView: UIImageView!
     @IBOutlet private var titleLeading: NSLayoutConstraint!
     private var iconImageView: UIImageView?
-
+    @IBOutlet private var createdAtLabel: UILabel!
+    
     private(set) var viewModel: TransactionItemViewModelProtocol?
 
     var statusStyleProvider: TransactionStatusDesignable? {
@@ -48,6 +49,7 @@ final class TransactionTableViewCell: UITableViewCell {
         if let viewModel = viewModel {
             titleLabel.text = viewModel.title
             amountLabel.text = viewModel.amount
+            createdAtLabel.text = viewModel.timestamp
 
             apply(icon: viewModel.icon)
             applyIncomingIcon()
@@ -87,6 +89,9 @@ final class TransactionTableViewCell: UITableViewCell {
             titleLabel.font = style.title.font
 
             amountLabel.font = style.amount.font
+            
+            createdAtLabel.textColor = style.timestamp.color
+            createdAtLabel.font = style.timestamp.font
 
             applyIncomingIcon()
             applyStatusStyle()
