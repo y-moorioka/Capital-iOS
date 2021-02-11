@@ -40,7 +40,7 @@ final class HistoryViewModelFactory {
     private lazy var timestampFormatter: DateFormatter = {
         let item = DateFormatter()
         item.dateStyle = .long
-        item.timeStyle = .short
+        item.timeStyle = .medium
         return item
     }()
 
