@@ -39,6 +39,7 @@ final class ConfirmationPresenter {
         self.accessoryViewModelFactory = accessoryViewModelFactory
         self.eventCenter = eventCenter
         self.feeDisplaySettings = feeDisplaySettings
+        self.notifyAuth = false
     }
 
     private func handleTransfer(result: Result<Void, Error>) {
