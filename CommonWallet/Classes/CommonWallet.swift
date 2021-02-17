@@ -105,6 +105,10 @@ public final class CommonWalletBuilder {
     }
 }
 
+struct TransferLabel {
+    static let wait = "waitflag"
+}
+
 extension CommonWalletBuilder: CommonWalletBuilderProtocol {
     public var accountListModuleBuilder: AccountListModuleBuilderProtocol {
         return privateAccountModuleBuilder
