@@ -62,26 +62,26 @@ final class ConfirmationPresenter {
                     view?.didStartLoading()
                     UserDefaults.standard.setValue(1, forKey: TransferLabel.wait)
                     
-//                    let queue = DispatchQueue(label: TransferLabel.queue)
-                    let notifySemaphore = DispatchSemaphore(value: 0)
-//                    queue.async { [weak self] in
+                    let queue = DispatchQueue(label: TransferLabel.queue)
+//                    let notifySemaphore = DispatchSemaphore(value: 0)
+                    queue.async { [weak self] in
                         for i in 0...5 {
                             Thread.sleep(forTimeInterval: 1.0)
                             
                             if UserDefaults.standard.integer(forKey: TransferLabel.wait) == 0 || i == 5 {
-//                                DispatchQueue.main.async {
-//                                    self?.view?.didStopLoading()
-//                                    self?.coordinator.dismiss()
-//                                }
-                                notifySemaphore.signal()
+                                DispatchQueue.main.async {
+                                    self?.view?.didStopLoading()
+                                    self?.coordinator.dismiss()
+                                }
+//                                notifySemaphore.signal()
                                 break
                             }
                         }
-                    notifySemaphore.wait()
-                    
-                    view?.didStopLoading()
-                    coordinator.dismiss()
-//                    }
+//                    notifySemaphore.wait()
+//
+//                    view?.didStopLoading()
+//                    coordinator.dismiss()
+                    }
                 } else {
                     coordinator.dismiss()
                 }
