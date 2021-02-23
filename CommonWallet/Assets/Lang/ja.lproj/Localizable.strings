@@ -3,7 +3,7 @@
 "common.input.validator_hint" = "%@ 0xで始まる16進記号（小文字）";
 "common.incoming" = "受信";
 "common.outgoing" = "送信";
-"common.input.validator_max_hint" = "最大%@シンボル";
+"common.input.validator_max_hint" = "最大%@文字";
 "common.all" = "すべて";
 "common.error" = "エラー";
 "common.ok" = "OK";
