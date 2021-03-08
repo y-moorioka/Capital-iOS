@@ -42,7 +42,7 @@ extension WalletDefaultInputValidator: WalletInputValidatorProtocol {
             return false
         }
 
-        let newInput = (input as NSString).replacingCharacters(in: range, with: string)
+        let newInput = (input as NSString).replacingCharacters(in: range, with: string == "゛" ? "" : string)
 
         if maxLength > 0 {
             switch lengthMetric {
