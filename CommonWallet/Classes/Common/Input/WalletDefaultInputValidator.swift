@@ -42,7 +42,7 @@ extension WalletDefaultInputValidator: WalletInputValidatorProtocol {
             return false
         }
 
-        let newInput = (input as NSString).replacingCharacters(in: range, with: string == "゛" ? "" : string)
+        let newInput = (input as NSString).replacingCharacters(in: range, with: string)
 
         if maxLength > 0 {
             switch lengthMetric {
@@ -58,6 +58,28 @@ extension WalletDefaultInputValidator: WalletInputValidatorProtocol {
         }
 
         input = newInput
+
+        return true
+    }
+    
+    public func didReceiveReplacement(_ string: String, for range: NSRange, inputText: String) -> Bool {
+        if let charset = invalidCharset, string.rangeOfCharacter(from: charset) != nil {
+            return false
+        }
+        let newInput = (inputText as NSString).replacingCharacters(in: range, with: string == "゛" ? "" : string)
+
+        if maxLength > 0 {
+            switch lengthMetric {
+            case .utf8byte:
+                if newInput.lengthOfBytes(using: .utf8) > maxLength {
+                    return false
+                }
+            case .character:
+                if newInput.count > maxLength {
+                    return false
+                }
+            }
+        }
 
         return true
     }

@@ -18,6 +18,7 @@ protocol DescriptionInputViewModelProtocol: class {
     var observable: WalletViewModelObserverContainer<DescriptionInputViewModelObserver> { get }
 
     func didReceiveReplacement(_ string: String, for range: NSRange) -> Bool
+    func didReceiveReplacement(_ string: String, for range: NSRange, inputText: String) -> Bool
 }
 
 final class DescriptionInputViewModel: DescriptionInputViewModelProtocol {
@@ -48,6 +49,14 @@ final class DescriptionInputViewModel: DescriptionInputViewModelProtocol {
 
     func didReceiveReplacement(_ string: String, for range: NSRange) -> Bool {
         let applied = validator.didReceiveReplacement(string, for: range)
+
+        observable.observers.forEach { $0.observer?.descriptionInputDidChangeText() }
+
+        return applied
+    }
+    
+    func didReceiveReplacement(_ string: String, for range: NSRange, inputText: String) -> Bool {
+        let applied = validator.didReceiveReplacement(string, for: range, inputText: inputText)
 
         observable.observers.forEach { $0.observer?.descriptionInputDidChangeText() }
 

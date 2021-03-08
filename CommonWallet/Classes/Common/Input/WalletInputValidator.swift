@@ -11,4 +11,5 @@ public protocol WalletInputValidatorProtocol: class {
     var isValid: Bool { get }
 
     func didReceiveReplacement(_ string: String, for range: NSRange) -> Bool
+    func didReceiveReplacement(_ string: String, for range: NSRange, inputText: String) -> Bool
 }

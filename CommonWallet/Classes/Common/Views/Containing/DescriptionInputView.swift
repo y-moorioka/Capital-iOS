@@ -128,7 +128,7 @@ final class DescriptionInputView: UIView {
 
 extension DescriptionInputView: UITextViewDelegate {
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        return viewModel?.didReceiveReplacement(text, for: range) ?? false
+        return viewModel?.didReceiveReplacement(text, for: range, inputText: textView.text!) ?? false
     }
 
     func textViewDidChange(_ textView: UITextView) {
