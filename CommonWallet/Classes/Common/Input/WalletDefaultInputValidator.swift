@@ -80,6 +80,8 @@ extension WalletDefaultInputValidator: WalletInputValidatorProtocol {
                 }
             }
         }
+        
+        input = newInput
 
         return true
     }
