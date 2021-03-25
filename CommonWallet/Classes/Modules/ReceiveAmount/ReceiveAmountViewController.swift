@@ -14,7 +14,7 @@ final class ReceiveAmountViewController: UIViewController, AdaptiveDesignable {
         static let verticalSpacing: CGFloat = 17.0
         static let bottomMargin: CGFloat = 8.0
         static let collapsedQrMargin: CGFloat = 6.0
-        static let collapsedQrBackgroundHeight: CGFloat = 230.0
+        static let collapsedQrBackgroundHeight: CGFloat = 0.0
         static let expandedQrMargin: CGFloat = 40.0
         static let expandedQrBackgroundHeight: CGFloat = 440.0
         static let assetViewHeight: CGFloat = 54.0
