@@ -337,7 +337,7 @@ final class ReceiveAmountViewController: UIViewController, AdaptiveDesignable {
         presenter.share()
     }
     
-    @objc private func doneBuuttonTapped() {
+    @objc private func doneButtonTapped() {
         containerView.endEditing(true)
     }
 }
