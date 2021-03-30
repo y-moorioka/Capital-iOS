@@ -7,7 +7,7 @@
 import Foundation
 
 final class ScrollableContainerView: UIView {
-    private(set) var scrollView = MyScrollView()
+    private(set) var scrollView = UIScrollView()
     private(set) var stackView = UIStackView()
 
     private var scrollBottom: NSLayoutConstraint!
@@ -72,17 +72,5 @@ final class ScrollableContainerView: UIView {
         stackView.rightAnchor.constraint(equalTo: scrollView.rightAnchor).isActive = true
         stackView.topAnchor.constraint(equalTo: scrollView.topAnchor).isActive = true
         stackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor).isActive = true
-    }
-}
-
-extension UIStackView {
-    public override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.superview?.endEditing(true)
-    }
-}
-
-class MyScrollView: UIScrollView {
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.superview?.endEditing(true)
     }
 }

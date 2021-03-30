@@ -19,6 +19,7 @@ protocol ContainingViewFactoryProtocol {
     func createDescriptionInputView() -> DescriptionInputView
     func createFeeView() -> FeeView
     func createSeparatorView() -> BorderedContainerView
+    func createDoneButtonView() -> RoundedButton
 }
 
 struct ContainingViewFactory: ContainingViewFactoryProtocol {
@@ -147,5 +148,35 @@ struct ContainingViewFactory: ContainingViewFactoryProtocol {
         let separatorView = BorderedContainerView()
         separatorView.strokeColor = style.thinBorderColor
         return separatorView
+    }
+    
+    func createDoneButtonView() -> RoundedButton {
+        let button = RoundedButton()
+        button.roundedBackgroundView?.shadowOpacity = 0.0
+        button.roundedBackgroundView?.cornerRadius = 23.0
+        button.roundedBackgroundView?.fillColor = .hex(0x000080)
+        button.roundedBackgroundView?.highlightedFillColor = .hex(0x000080)
+        button.imageWithTitleView?.titleColor = .white
+        button.imageWithTitleView?.titleFont = .walletBodyBold
+        button.changesContentOpacityWhenHighlighted = true
+        return button
+    }
+}
+
+extension UIColor {
+    fileprivate static func hex1(red: Int, green: Int, blue: Int) -> UIColor {
+        assert(red >= 0 && red <= 255, "Invalid red component")
+        assert(green >= 0 && green <= 255, "Invalid green component")
+        assert(blue >= 0 && blue <= 255, "Invalid blue component")
+        
+        return .init(red: CGFloat(red) / 255.0, green: CGFloat(green) / 255.0, blue: CGFloat(blue) / 255.0, alpha: 1.0)
+    }
+    
+    fileprivate static func hex(_ hex: Int) -> UIColor {
+        return hex1(
+            red: (hex >> 16) & 0xFF,
+            green: (hex >> 8) & 0xFF,
+            blue: hex & 0xFF
+        )
     }
 }

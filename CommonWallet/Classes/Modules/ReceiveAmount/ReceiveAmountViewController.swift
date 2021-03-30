@@ -21,6 +21,7 @@ final class ReceiveAmountViewController: UIViewController, AdaptiveDesignable {
         static let amountViewHeight: CGFloat = 54.0
         static let separatorHeight: CGFloat = 1.0
         static let expandedAdaptiveScaleWhenDecreased: CGFloat = 0.9
+        static let doneButtonMargin: CGFloat = 45.0
     }
 
     enum LayoutState {
@@ -155,6 +156,16 @@ final class ReceiveAmountViewController: UIViewController, AdaptiveDesignable {
 
         return separatorView
     }
+    
+    private func createSeparatorBottomView() -> BorderedContainerView {
+        let separatorView = containingFactory.createSeparatorView()
+        separatorView.strokeWidth = Constants.doneButtonMargin
+        separatorView.borderType = [.top]
+        
+        separatorView.heightAnchor.constraint(equalToConstant: Constants.doneButtonMargin).isActive = true
+        
+        return separatorView
+    }
 
     private func addDescriptionView() {
         amountInputView.contentInsets = UIEdgeInsets(top: Constants.verticalSpacing, left: 0.0,
@@ -174,6 +185,19 @@ final class ReceiveAmountViewController: UIViewController, AdaptiveDesignable {
                                                constant: -2 * Constants.horizontalMargin).isActive = true
 
         self.descriptionInputView = descriptionView
+    }
+    
+    private func addDoneButtonView() {
+        let doneButton = containingFactory.createDoneButtonView()
+        doneButton.contentInsets = UIEdgeInsets(top: Constants.bottomMargin, left: Constants.horizontalMargin,
+                                                bottom: Constants.bottomMargin, right: Constants.horizontalMargin)
+        doneButton.imageWithTitleView?.title = L10n.displayQrCode
+        doneButton.isEnabled = false
+        doneButton.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
+        switchDisplay(view: doneButton, active: false)
+        
+        containerView.stackView.addArrangedSubview(createSeparatorBottomView())
+        containerView.stackView.addArrangedSubview(doneButton)
     }
 
     private func setupLocalization() {
@@ -223,6 +247,9 @@ final class ReceiveAmountViewController: UIViewController, AdaptiveDesignable {
 
         switch state {
         case .collapsed:
+            if let view = containerView.stackView.subviews.last as? RoundedButton {
+                switchDisplay(view: view, active: true)
+            }
             qrBackgroundHeight = Constants.collapsedQrBackgroundHeight
         case .expanded:
             qrBackgroundHeight = Constants.expandedQrBackgroundHeight
@@ -230,11 +257,21 @@ final class ReceiveAmountViewController: UIViewController, AdaptiveDesignable {
             if isAdaptiveWidthDecreased {
                 qrBackgroundHeight *= Constants.expandedAdaptiveScaleWhenDecreased
             }
+            
+            if let view = containerView.stackView.subviews.last as? RoundedButton {
+                switchDisplay(view: view, active: false)
+            }
         }
 
         qrBackgroundHeight *= designScaleRatio.width
 
         return qrBackgroundHeight
+    }
+    
+    private func switchDisplay(view: RoundedButton, active: Bool) {
+        view.isEnabled = active
+        view.imageWithTitleView?.isHidden = active ? false : true
+        view.backgroundView?.isHidden = active ? false : true
     }
 
     // MARK: Keyboard Handling
@@ -316,6 +353,10 @@ extension ReceiveAmountViewController: ReceiveAmountViewProtocol {
     func didReceive(descriptionViewModel: DescriptionInputViewModelProtocol) {
         if descriptionInputView == nil {
             addDescriptionView()
+        }
+        
+        if addDoneButtonView == nil {
+            addDoneButtonView()
         }
 
         descriptionInputView?.bind(viewModel: descriptionViewModel)

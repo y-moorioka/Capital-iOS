@@ -68,6 +68,8 @@ public enum L10n {
         public static var description: String { return localize("common.description") }
         /// Description (optional)
         public static var descriptionOptional: String { return localize("common.description_optional") }
+        /// Display the QR code.
+        public static var displayQrCode: String { return localize("common.display_qr_code") }
         /// Done
         public static var done: String { return localize("common.done") }
         /// Error
