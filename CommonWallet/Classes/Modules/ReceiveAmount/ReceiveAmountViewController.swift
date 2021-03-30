@@ -51,6 +51,7 @@ final class ReceiveAmountViewController: UIViewController, AdaptiveDesignable {
     private var selectedAssetView: SelectedAssetView!
     private var amountInputView: AmountInputView!
     private var descriptionInputView: DescriptionInputView?
+    private var doneBuuttonView: UIView?
 
     private var qrHeight: NSLayoutConstraint!
     private var amountHeight: NSLayoutConstraint!
@@ -171,13 +172,13 @@ final class ReceiveAmountViewController: UIViewController, AdaptiveDesignable {
         amountInputView.contentInsets = UIEdgeInsets(top: Constants.verticalSpacing, left: 0.0,
                                                      bottom: Constants.verticalSpacing, right: 0.0)
         amountHeight.constant = 2 * Constants.verticalSpacing + Constants.amountViewHeight
-        amountInputView.keyboardIndicatorMode = .editing
+        amountInputView.keyboardIndicatorMode = .never
 
         let descriptionView = containingFactory.createDescriptionInputView()
         descriptionView.contentInsets = UIEdgeInsets(top: Constants.verticalSpacing, left: 0.0,
                                                      bottom: Constants.bottomMargin, right: 0.0)
         descriptionView.borderedView.borderType = [.top]
-        descriptionView.keyboardIndicatorMode = .editing
+        descriptionView.keyboardIndicatorMode = .never
 
         containerView.stackView.addArrangedSubview(descriptionView)
 
@@ -191,13 +192,15 @@ final class ReceiveAmountViewController: UIViewController, AdaptiveDesignable {
         let doneButton = containingFactory.createDoneButtonView()
         doneButton.contentInsets = UIEdgeInsets(top: Constants.bottomMargin, left: Constants.horizontalMargin,
                                                 bottom: Constants.bottomMargin, right: Constants.horizontalMargin)
-        doneButton.imageWithTitleView?.title = L10n.displayQrCode
+        doneButton.imageWithTitleView?.title = L10n.Common.displayQrCode
         doneButton.isEnabled = false
-        doneButton.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
+        doneButton.addTarget(self, action: #selector(doneButtonTapped), for: .touchUpInside)
         switchDisplay(view: doneButton, active: false)
         
         containerView.stackView.addArrangedSubview(createSeparatorBottomView())
         containerView.stackView.addArrangedSubview(doneButton)
+        
+        self.doneBuuttonView = doneButton
     }
 
     private func setupLocalization() {
@@ -333,6 +336,10 @@ final class ReceiveAmountViewController: UIViewController, AdaptiveDesignable {
     @objc private func actionShare() {
         presenter.share()
     }
+    
+    @objc private func doneBuuttonTapped() {
+        containerView.endEditing(true)
+    }
 }
 
 
@@ -355,7 +362,7 @@ extension ReceiveAmountViewController: ReceiveAmountViewProtocol {
             addDescriptionView()
         }
         
-        if addDoneButtonView == nil {
+        if doneBuuttonView == nil {
             addDoneButtonView()
         }
 
