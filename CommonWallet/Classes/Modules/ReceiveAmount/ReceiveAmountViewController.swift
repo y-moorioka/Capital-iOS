@@ -369,6 +369,10 @@ final class ReceiveAmountViewController: UIViewController, AdaptiveDesignable {
     @objc private func doneButtonTapped() {
         containerView.endEditing(true)
     }
+    
+    @objc private func inputButtonTapped() {
+        amountInputView.amountField.becomeFirstResponder()
+    }
 }
 
 
