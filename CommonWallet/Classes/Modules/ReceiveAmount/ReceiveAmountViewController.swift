@@ -15,13 +15,14 @@ final class ReceiveAmountViewController: UIViewController, AdaptiveDesignable {
         static let bottomMargin: CGFloat = 8.0
         static let collapsedQrMargin: CGFloat = 6.0
         static let collapsedQrBackgroundHeight: CGFloat = 0.0
-        static let expandedQrMargin: CGFloat = 40.0
-        static let expandedQrBackgroundHeight: CGFloat = 440.0
+        static let expandedQrMargin: CGFloat = 10.0
+        static let expandedQrBackgroundHeight: CGFloat = 351.0
         static let assetViewHeight: CGFloat = 54.0
         static let amountViewHeight: CGFloat = 54.0
         static let separatorHeight: CGFloat = 1.0
         static let expandedAdaptiveScaleWhenDecreased: CGFloat = 0.9
-        static let doneButtonMargin: CGFloat = 45.0
+        static let inputButtonHeight: CGFloat = 33.0
+        static let inputButtonMargin: CGFloat = 5.0
     }
 
     enum LayoutState {
@@ -52,6 +53,7 @@ final class ReceiveAmountViewController: UIViewController, AdaptiveDesignable {
     private var amountInputView: AmountInputView!
     private var descriptionInputView: DescriptionInputView?
     private var doneBuuttonView: UIView?
+    private var inputButtonHeight: NSLayoutConstraint!
 
     private var qrHeight: NSLayoutConstraint!
     private var amountHeight: NSLayoutConstraint!
@@ -115,6 +117,7 @@ final class ReceiveAmountViewController: UIViewController, AdaptiveDesignable {
         selectedAssetView.heightAnchor.constraint(equalToConstant: Constants.assetViewHeight).isActive = true
 
         amountInputView = containingFactory.createAmountInputView(for: .small)
+        amountInputView.titleLabel.text = L10n.Amount.receive
         amountInputView.borderedView.borderType = [.top]
         amountInputView.contentInsets = UIEdgeInsets(top: Constants.verticalSpacing, left: 0.0,
                                                      bottom: Constants.bottomMargin, right: 0.0)
@@ -125,15 +128,15 @@ final class ReceiveAmountViewController: UIViewController, AdaptiveDesignable {
             .constraint(equalToConstant: amountHeightValue)
         amountHeight.isActive = true
 
-        let views: [UIView] = [qrView, createSeparatorView(), selectedAssetView, amountInputView]
+        let views: [UIView] = [qrView, createInputButtonView(), createSeparatorView(), selectedAssetView, amountInputView]
 
         views.forEach { containerView.stackView.addArrangedSubview($0) }
 
-        views[0...1].forEach {
+        views[0...2].forEach {
             $0.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
         }
 
-        views[2...].forEach {
+        views[3...].forEach {
             $0.widthAnchor.constraint(equalTo: view.widthAnchor,
                                       constant: -2 * Constants.horizontalMargin).isActive = true
         }
@@ -158,14 +161,28 @@ final class ReceiveAmountViewController: UIViewController, AdaptiveDesignable {
         return separatorView
     }
     
-    private func createSeparatorBottomView() -> BorderedContainerView {
-        let separatorView = containingFactory.createSeparatorView()
-        separatorView.strokeWidth = Constants.doneButtonMargin
-        separatorView.borderType = [.top]
+    private func createInputButtonView() -> UIStackView {
+        let inputButtonView = containingFactory.createDoneButtonView()
+        inputButtonView.contentInsets = UIEdgeInsets(top: Constants.bottomMargin, left: Constants.horizontalMargin,
+                                                bottom: Constants.bottomMargin, right: Constants.horizontalMargin)
+        inputButtonView.imageWithTitleView?.title = L10n.Common.inputAmount(L10n.Amount.receive)
+        inputButtonView.addTarget(self, action: #selector(inputButtonTapped), for: .touchUpInside)
+        inputButtonHeight = inputButtonView.heightAnchor.constraint(equalToConstant: Constants.inputButtonHeight)
+        inputButtonHeight.isActive = true
         
-        separatorView.heightAnchor.constraint(equalToConstant: Constants.doneButtonMargin).isActive = true
+        let stackView = UIStackView()
+        stackView.backgroundColor = .white
+        stackView.axis = .vertical
+        stackView.alignment = .center
+        stackView.distribution = .fill
+        stackView.spacing = Constants.inputButtonMargin
         
-        return separatorView
+        let spacerView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: 0.0, height: 0.0))
+        stackView.addArrangedSubview(spacerView)
+        stackView.addArrangedSubview(inputButtonView)
+        stackView.addArrangedSubview(spacerView)
+        
+        return stackView
     }
 
     private func addDescriptionView() {
@@ -180,10 +197,10 @@ final class ReceiveAmountViewController: UIViewController, AdaptiveDesignable {
         descriptionView.borderedView.borderType = [.top]
         descriptionView.keyboardIndicatorMode = .never
 
-        containerView.stackView.addArrangedSubview(descriptionView)
-
-        descriptionView.widthAnchor.constraint(equalTo: view.widthAnchor,
-                                               constant: -2 * Constants.horizontalMargin).isActive = true
+//        containerView.stackView.addArrangedSubview(descriptionView)
+//
+//        descriptionView.widthAnchor.constraint(equalTo: view.widthAnchor,
+//                                               constant: -2 * Constants.horizontalMargin).isActive = true
 
         self.descriptionInputView = descriptionView
     }
@@ -197,7 +214,6 @@ final class ReceiveAmountViewController: UIViewController, AdaptiveDesignable {
         doneButton.addTarget(self, action: #selector(doneButtonTapped), for: .touchUpInside)
         switchDisplay(view: doneButton, active: false)
         
-        containerView.stackView.addArrangedSubview(createSeparatorBottomView())
         containerView.stackView.addArrangedSubview(doneButton)
         
         self.doneBuuttonView = doneButton
@@ -210,7 +226,7 @@ final class ReceiveAmountViewController: UIViewController, AdaptiveDesignable {
             title = localizableTitle.value(for: locale)
         }
 
-        amountInputView?.titleLabel.text = L10n.Amount.title
+        amountInputView?.titleLabel.text = L10n.Amount.receive
     }
 
     private func adjustLayout() {
@@ -224,6 +240,7 @@ final class ReceiveAmountViewController: UIViewController, AdaptiveDesignable {
     private func updateLayoutConstraints(for state: LayoutState) {
         qrView?.margin = calculateQrMargin(for: state)
         qrHeight?.constant = calculateQrBackgrounHeight(for: state)
+        inputButtonHeight?.constant = getInputButtonHeight(for: state)
     }
 
     private func calculateQrMargin(for state: LayoutState) -> CGFloat {
@@ -269,6 +286,18 @@ final class ReceiveAmountViewController: UIViewController, AdaptiveDesignable {
         qrBackgroundHeight *= designScaleRatio.width
 
         return qrBackgroundHeight
+    }
+    
+    func getInputButtonHeight(for state: LayoutState) -> CGFloat {
+        var inputButtonHeight: CGFloat
+        switch state {
+        case .collapsed:
+            inputButtonHeight = .zero
+        case .expanded:
+            inputButtonHeight = Constants.inputButtonHeight
+        }
+        
+        return inputButtonHeight
     }
     
     private func switchDisplay(view: RoundedButton, active: Bool) {

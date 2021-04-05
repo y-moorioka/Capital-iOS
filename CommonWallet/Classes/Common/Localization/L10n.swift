@@ -25,6 +25,8 @@ public enum L10n {
         }
         /// Set Amount
         public static var moduleTitle: String { return localize("amount.module_title") }
+        /// Amount received
+        public static var receive: String { return localize("amount.receive") }
         /// Amount to send
         public static var send: String { return localize("amount.send") }
         /// Amount
@@ -80,6 +82,10 @@ public enum L10n {
         }
         /// Incoming
         public static var incoming: String { return localize("common.incoming") }
+        /// Input for %@
+        public static func inputAmount(_ p1: String) -> String {
+            return localize("common.input_amount", p1)
+        }
         /// Next
         public static var next: String { return localize("common.next") }
         /// Not now
@@ -104,6 +110,8 @@ public enum L10n {
         public static var showMore: String { return localize("common.show_more") }
         /// Today
         public static var today: String { return localize("common.today") }
+        /// Balance
+        public static var walletAmount: String { return localize("common.wallet_amount") }
         /// Yesterday
         public static var yesterday: String { return localize("common.yesterday") }
 
