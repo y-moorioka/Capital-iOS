@@ -25,7 +25,7 @@ final class AssetSelectionFactory: AssetSelectionFactoryProtocol {
         let amountFormatter = amountFormatterFactory.createDisplayFormatter(for: asset)
 
         let details = asset.details.value(for: locale)
-        var title = "\(details) - \(asset.symbol)"
+        var title = "\(L10n.Common.walletAmount) \(asset.symbol)"
 
         if let balanceData = balanceData,
             let formattedBalance = amountFormatter.value(for: locale)

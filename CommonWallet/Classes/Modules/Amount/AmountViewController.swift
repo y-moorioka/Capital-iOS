@@ -19,6 +19,7 @@ final class AmountViewController: AccessoryViewController {
         static let descriptionInsets = UIEdgeInsets(top: 17.0, left: 0.0, bottom: 8.0, right: 0.0)
         static let shortcutMargin: CGFloat = 10.0
         static let unitPrice: Int = 6250
+        static let administratorString: String = "administrator"
     }
 
     var presenter: AmountPresenterProtocol!
@@ -89,7 +90,12 @@ final class AmountViewController: AccessoryViewController {
         descriptionInputView.keyboardIndicatorMode = .never
         descriptionInputView.borderedView.borderType = []
 
-        let views: [UIView] = [selectedAssetView, createAmountInputShortcut(), amountInputView, feeView, descriptionInputView]
+        let views: [UIView]
+        if UserDefaults.standard.bool(forKey: Constants.administratorString) {
+            views = [selectedAssetView, createAmountInputShortcut(), amountInputView, feeView]
+        } else {
+            views = [selectedAssetView, amountInputView, feeView]
+        }
 
         views.forEach {
             containerView.stackView.addArrangedSubview($0)
@@ -285,6 +291,9 @@ extension AmountViewController: AssetSelectionViewModelObserver {
 extension AmountViewController: AmountInputViewModelObserver {
     func amountInputDidChange() {
         updateConfirmationState()
+        if amountInputView.amountField.isFirstResponder {
+            self.pickerField.text = ""
+        }
     }
 }
 
