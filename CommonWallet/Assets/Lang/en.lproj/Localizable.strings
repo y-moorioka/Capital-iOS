@@ -100,3 +100,7 @@
 "amount.receive" = "Amount received";
 "common.input_amount" = "Input for %@";
 "common.wallet_amount" = "Balance";
+"amount.ticket_title" = "number of copies issued";
+"amount.ticket_place_holder" = "number of copies";
+"amount.ticket_number_of" = "%@ copies";
+"amount.top_title" = "Send Money";

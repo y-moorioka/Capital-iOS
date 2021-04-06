@@ -100,3 +100,7 @@
 "amount.receive" = "受取金額";
 "common.input_amount" = "%@の入力";
 "common.wallet_amount" = "残高";
+"amount.ticket_title" = "発行部数";
+"amount.ticket_place_holder" = "部数";
+"amount.ticket_number_of" = "%@ 部";
+"amount.top_title" = "お金を送る";

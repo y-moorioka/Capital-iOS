@@ -463,7 +463,7 @@ extension AmountPresenter: AmountPresenterProtocol {
     func setup() {
         amountInputViewModel.observable.add(observer: self)
 
-        view?.set(title: L10n.Amount.moduleTitle)
+        view?.set(title: L10n.Amount.topTitle)
         view?.set(assetViewModel: assetSelectionViewModel)
         view?.set(amountViewModel: amountInputViewModel)
         view?.set(descriptionViewModel: descriptionInputViewModel)

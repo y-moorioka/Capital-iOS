@@ -29,8 +29,18 @@ public enum L10n {
         public static var receive: String { return localize("amount.receive") }
         /// Amount to send
         public static var send: String { return localize("amount.send") }
+        /// %@ copies
+        public static func ticketNumberOf(_ p1: String) -> String {
+            return localize("amount.ticket_number_of", p1)
+        }
+        /// number of copies
+        public static var ticketPlaceHolder: String { return localize("amount.ticket_place_holder") }
+        /// number of copies issued
+        public static var ticketTitle: String { return localize("amount.ticket_title") }
         /// Amount
         public static var title: String { return localize("amount.title") }
+        /// Send Money
+        public static var topTitle: String { return localize("amount.top_title") }
         /// Total amount
         public static var total: String { return localize("amount.total") }
 

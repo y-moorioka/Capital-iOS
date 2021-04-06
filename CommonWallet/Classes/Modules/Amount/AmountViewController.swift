@@ -12,9 +12,13 @@ final class AmountViewController: AccessoryViewController {
         static let horizontalMargin: CGFloat = 20.0
         static let assetHeight: CGFloat = 54.0
         static let amountHeight: CGFloat = 70.0
+        static let shortcutHeight: CGFloat = 54.0
+        static let toolbarHeight: CGFloat = 40.0
         static let amountInsets = UIEdgeInsets(top: 17.0, left: 0.0, bottom: 8.0, right: 0.0)
         static let feeInsets = UIEdgeInsets(top: 8.0, left: 0.0, bottom: 17.0, right: 0.0)
         static let descriptionInsets = UIEdgeInsets(top: 17.0, left: 0.0, bottom: 8.0, right: 0.0)
+        static let shortcutMargin: CGFloat = 10.0
+        static let unitPrice: Int = 6250
     }
 
     var presenter: AmountPresenterProtocol!
@@ -32,6 +36,9 @@ final class AmountViewController: AccessoryViewController {
     private var amountInputView: AmountInputView!
     private var feeView: FeeView!
     private var descriptionInputView: DescriptionInputView!
+    private var picker: UIPickerView!
+    private var pickerList: [Int] = [Int](0...20)
+    private var pickerField: UITextField!
 
     init(containingFactory: ContainingViewFactoryProtocol, style: WalletStyleProtocol) {
         self.containingFactory = containingFactory
@@ -82,7 +89,7 @@ final class AmountViewController: AccessoryViewController {
         descriptionInputView.keyboardIndicatorMode = .never
         descriptionInputView.borderedView.borderType = []
 
-        let views: [UIView] = [selectedAssetView, amountInputView, feeView, descriptionInputView]
+        let views: [UIView] = [selectedAssetView, createAmountInputShortcut(), amountInputView, feeView, descriptionInputView]
 
         views.forEach {
             containerView.stackView.addArrangedSubview($0)
@@ -96,7 +103,7 @@ final class AmountViewController: AccessoryViewController {
     }
     
     private func setupLocalization() {
-        amountInputView.titleLabel.text = L10n.Amount.title
+        amountInputView.titleLabel.text = L10n.Amount.send
     }
 
     private func updateConfirmationState() {
@@ -122,6 +129,50 @@ final class AmountViewController: AccessoryViewController {
             let scrollFrame = containerView.scrollView.convert(caretRectangle, from: descriptionInputView)
             containerView.scrollView.scrollRectToVisible(scrollFrame, animated: animated)
         }
+    }
+    
+    private func createAmountInputShortcut() -> UIStackView {
+        let stackView = UIStackView()
+        stackView.backgroundColor = .clear
+        stackView.axis = .vertical
+        stackView.alignment = .leading
+        stackView.distribution = .fill
+        stackView.spacing = Constants.shortcutMargin
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        
+        let label = UILabel()
+        label.text = L10n.Amount.ticketTitle
+        label.textColor = style.captionTextColor
+        label.font = style.bodyRegularFont
+        
+        pickerField = UITextField()
+        pickerField.placeholder = L10n.Amount.ticketPlaceHolder
+        pickerField.textColor = style.bodyTextColor
+
+        if let caretColor = style.caretColor {
+            pickerField.tintColor = caretColor
+        }
+        pickerField.font = style.header2Font
+        
+        picker = UIPickerView()
+        picker.delegate = self
+        picker.dataSource = self
+        
+        let toolbar = UIToolbar(frame: CGRect(x: 0.0, y: 0.0, width: view.frame.size.width, height: Constants.toolbarHeight))
+        let spaceItem = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
+        let doneItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))
+        toolbar.setItems([spaceItem, doneItem], animated: true)
+        
+        pickerField.inputView = picker
+        pickerField.inputAccessoryView = toolbar
+        
+        let spacerView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: 0.0, height: 0.0))
+        
+        stackView.addArrangedSubview(label)
+        stackView.addArrangedSubview(pickerField)
+        stackView.addArrangedSubview(spacerView)
+        
+        return stackView
     }
 
     // MARK: Override Superclass
@@ -152,6 +203,19 @@ final class AmountViewController: AccessoryViewController {
         descriptionInputView.textView.resignFirstResponder()
 
         presenter.confirm()
+    }
+    
+    // MARK: Actions
+    
+    @objc func done() {
+        pickerField.endEditing(true)
+        for _ in 0...amountInputView.inputViewModel!.displayAmount.count {
+            amountInputView.inputViewModel?.didReceiveReplacement("", for: NSRange(location: 0, length: 1))
+        }
+        let amount = pickerList[picker.selectedRow(inComponent: 0)] * Constants.unitPrice
+        if amount > 0 {
+            amountInputView.inputViewModel?.didReceiveReplacement("\(amount)", for: NSRange(location: 0, length: "\(amount)".count))
+        }
     }
 }
 
@@ -235,6 +299,28 @@ extension AmountViewController: Localizable {
         if isViewLoaded {
             setupLocalization()
             view.setNeedsLayout()
+        }
+    }
+}
+
+extension AmountViewController: UIPickerViewDelegate, UIPickerViewDataSource {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return pickerList.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return pickerList[row].description
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        if row > 0 {
+            self.pickerField.text = L10n.Amount.ticketNumberOf(pickerList[row].description)
+        } else {
+            self.pickerField.text = ""
         }
     }
 }
