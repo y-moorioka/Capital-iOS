@@ -298,8 +298,10 @@ extension AmountViewController: AssetSelectionViewModelObserver {
 extension AmountViewController: AmountInputViewModelObserver {
     func amountInputDidChange() {
         updateConfirmationState()
-        if amountInputView.amountField.isFirstResponder {
-            self.pickerField.text = ""
+        if UserDefaults.standard.bool(forKey: Constants.administratorString) {
+            if amountInputView.amountField.isFirstResponder {
+                self.pickerField.text = ""
+            }
         }
     }
 }
