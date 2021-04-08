@@ -14,12 +14,6 @@ public enum L10n {
     public enum Account {
         /// Account details
         public static var detailsTitle: String { return localize("account.details_title") }
-        /// Please select
-        public static var ticketNonSelect: String { return localize("account.ticket_non_select") }
-        /// %1$@: %2$@%3$@ (deposit amount: %2$@%4$@)
-        public static func ticketSelectable(_ p1: String, _ p2: String, _ p3: String, _ p4: String) -> String {
-            return localize("account.ticket_selectable", p1, p2, p3, p4)
-        }
     }
 
     public enum Amount {
@@ -35,12 +29,18 @@ public enum L10n {
         public static var receive: String { return localize("amount.receive") }
         /// Amount to send
         public static var send: String { return localize("amount.send") }
+        /// Please select
+        public static var ticketNonSelect: String { return localize("amount.ticket_non_select") }
         /// %@ copies
         public static func ticketNumberOf(_ p1: String) -> String {
             return localize("amount.ticket_number_of", p1)
         }
         /// number of copies
         public static var ticketPlaceHolder: String { return localize("amount.ticket_place_holder") }
+        /// %1$@: %2$@%3$@ (deposit amount: %2$@%4$@)
+        public static func ticketSelectable(_ p1: String, _ p2: String, _ p3: String, _ p4: String) -> String {
+            return localize("amount.ticket_selectable", p1, p2, p3, p4)
+        }
         /// number of copies issued
         public static var ticketTitle: String { return localize("amount.ticket_title") }
         /// Amount

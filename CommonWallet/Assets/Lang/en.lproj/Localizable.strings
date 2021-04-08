@@ -104,5 +104,5 @@
 "amount.ticket_place_holder" = "number of copies";
 "amount.ticket_number_of" = "%@ copies";
 "amount.top_title" = "Send Money";
-"account.ticket_non_select" = "Please select";
-"account.ticket_selectable" = "%1$@: %2$@%3$@ (deposit amount: %2$@%4$@)";
+"amount.ticket_non_select" = "Please select";
+"amount.ticket_selectable" = "%1$@: %2$@%3$@ (deposit amount: %2$@%4$@)";
