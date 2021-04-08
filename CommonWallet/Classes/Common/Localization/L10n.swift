@@ -14,6 +14,12 @@ public enum L10n {
     public enum Account {
         /// Account details
         public static var detailsTitle: String { return localize("account.details_title") }
+        /// Please select
+        public static var ticketNonSelect: String { return localize("account.ticket_non_select") }
+        /// %1$@: %2$@%3$@ (deposit amount: %2$@%4$@)
+        public static func ticketSelectable(_ p1: String, _ p2: String, _ p3: String, _ p4: String) -> String {
+            return localize("account.ticket_selectable", p1, p2, p3, p4)
+        }
     }
 
     public enum Amount {
@@ -120,7 +126,7 @@ public enum L10n {
         public static var showMore: String { return localize("common.show_more") }
         /// Today
         public static var today: String { return localize("common.today") }
-        /// Balance
+        /// Balance: 
         public static var walletAmount: String { return localize("common.wallet_amount") }
         /// Yesterday
         public static var yesterday: String { return localize("common.yesterday") }

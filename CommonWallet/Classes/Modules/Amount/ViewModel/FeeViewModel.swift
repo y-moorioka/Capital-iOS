@@ -8,11 +8,13 @@ import Foundation
 @objc protocol FeeViewModelObserver {
     @objc optional func feeTitleDidChange()
     @objc optional func feeLoadingStateDidChange()
+    @objc optional func feeHiddenStateDidChange()
 }
 
 protocol FeeViewModelProtocol: class {
     var title: String { get }
     var isLoading: Bool { get }
+    var isHidden: Bool { get }
 
     var observable: WalletViewModelObserverContainer<FeeViewModelObserver> { get }
 }
@@ -30,6 +32,14 @@ final class FeeViewModel: FeeViewModelProtocol {
         didSet {
             observable.observers.forEach {
                 $0.observer?.feeLoadingStateDidChange?()
+            }
+        }
+    }
+    
+    var isHidden: Bool = false {
+        didSet {
+            observable.observers.forEach {
+                $0.observer?.feeHiddenStateDidChange?()
             }
         }
     }

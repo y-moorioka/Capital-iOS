@@ -128,15 +128,15 @@ final class ReceiveAmountViewController: UIViewController, AdaptiveDesignable {
             .constraint(equalToConstant: amountHeightValue)
         amountHeight.isActive = true
 
-        let views: [UIView] = [qrView, createInputButtonView(), createSeparatorView(), selectedAssetView, amountInputView]
+        let views: [UIView] = [qrView, createInputButtonView(), amountInputView]
 
         views.forEach { containerView.stackView.addArrangedSubview($0) }
 
-        views[0...2].forEach {
+        views[0...1].forEach {
             $0.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
         }
 
-        views[3...].forEach {
+        views[2...].forEach {
             $0.widthAnchor.constraint(equalTo: view.widthAnchor,
                                       constant: -2 * Constants.horizontalMargin).isActive = true
         }

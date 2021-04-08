@@ -15,6 +15,7 @@ protocol AmountInputViewModelProtocol: class {
     var observable: WalletViewModelObserverContainer<AmountInputViewModelObserver> { get }
 
     func didReceiveReplacement(_ string: String, for range: NSRange) -> Bool
+    func getFormattedAmount(amount: Decimal) -> String?
 }
 
 
@@ -102,5 +103,9 @@ final class AmountInputViewModel: AmountInputViewModelProtocol, MoneyPresentable
         amount = newAmount
 
         return false
+    }
+    
+    func getFormattedAmount(amount: Decimal) -> String? {
+        return formatter.string(from: amount as NSNumber)
     }
 }

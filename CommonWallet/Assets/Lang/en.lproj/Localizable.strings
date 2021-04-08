@@ -99,8 +99,10 @@
 "common.display_qr_code" = "Display the QR code.";
 "amount.receive" = "Amount received";
 "common.input_amount" = "Input for %@";
-"common.wallet_amount" = "Balance";
+"common.wallet_amount" = "Balance: ";
 "amount.ticket_title" = "number of copies issued";
 "amount.ticket_place_holder" = "number of copies";
 "amount.ticket_number_of" = "%@ copies";
 "amount.top_title" = "Send Money";
+"account.ticket_non_select" = "Please select";
+"account.ticket_selectable" = "%1$@: %2$@%3$@ (deposit amount: %2$@%4$@)";

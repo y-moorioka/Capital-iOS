@@ -168,6 +168,12 @@ final class AmountPresenter {
                                            parameters: [feeRate])
 
             let result = try feeCalculator.calculate(for: amount)
+            
+            if result.fee == 0 {
+                feeViewModel.isHidden = true
+            } else {
+                feeViewModel.isHidden = false
+            }
 
             feeViewModel.title = transferViewModelFactory.createFeeTitle(for: asset,
                                                                          sender: account.accountId,

@@ -7,6 +7,10 @@
 import Foundation
 import SoraUI
 
+protocol FeeViewDelegate: class {
+    func feeViewDidChange(_ view: FeeView)
+}
+
 final class FeeView: UIView {
     @IBOutlet private(set) var titleLabel: UILabel!
     @IBOutlet private(set) var activityIndicator: UIActivityIndicatorView!
@@ -27,6 +31,8 @@ final class FeeView: UIView {
             max(titleLabel.intrinsicContentSize.height, activityIndicator.intrinsicContentSize.height)
         return CGSize(width: UIView.noIntrinsicMetric, height: height)
     }
+    
+    weak var delegate: FeeViewDelegate?
 
     func bind(viewModel: FeeViewModelProtocol) {
         self.viewModel?.observable.remove(observer: self)
@@ -60,5 +66,9 @@ extension FeeView: FeeViewModelObserver {
         } else {
             activityIndicator.stopAnimating()
         }
+    }
+    
+    func feeHiddenStateDidChange() {
+        delegate?.feeViewDidChange(self)
     }
 }

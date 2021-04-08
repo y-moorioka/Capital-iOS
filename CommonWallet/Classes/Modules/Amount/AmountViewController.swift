@@ -13,12 +13,14 @@ final class AmountViewController: AccessoryViewController {
         static let assetHeight: CGFloat = 54.0
         static let amountHeight: CGFloat = 70.0
         static let shortcutHeight: CGFloat = 54.0
+        static let feeHeight: CGFloat = 45.0
         static let toolbarHeight: CGFloat = 40.0
         static let amountInsets = UIEdgeInsets(top: 17.0, left: 0.0, bottom: 8.0, right: 0.0)
         static let feeInsets = UIEdgeInsets(top: 8.0, left: 0.0, bottom: 17.0, right: 0.0)
         static let descriptionInsets = UIEdgeInsets(top: 17.0, left: 0.0, bottom: 8.0, right: 0.0)
         static let shortcutMargin: CGFloat = 10.0
         static let unitPrice: Int = 6250
+        static let unitBase: Int = 5000
         static let administratorString: String = "administrator"
     }
 
@@ -40,6 +42,8 @@ final class AmountViewController: AccessoryViewController {
     private var picker: UIPickerView!
     private var pickerList: [Int] = [Int](0...20)
     private var pickerField: UITextField!
+    private var feeViewHeight: NSLayoutConstraint!
+    private var assetString: String?
 
     init(containingFactory: ContainingViewFactoryProtocol, style: WalletStyleProtocol) {
         self.containingFactory = containingFactory
@@ -82,8 +86,11 @@ final class AmountViewController: AccessoryViewController {
         amountInputView.heightAnchor.constraint(equalToConstant: amountHeight).isActive = true
 
         feeView = containingFactory.createFeeView()
+        feeView.delegate = self
         feeView.contentInsets = Constants.feeInsets
         feeView.borderedView.borderType = [.bottom]
+        feeViewHeight = feeView.heightAnchor.constraint(equalToConstant: Constants.feeHeight)
+        feeViewHeight.isActive = true
 
         descriptionInputView = containingFactory.createDescriptionInputView()
         descriptionInputView.contentInsets = Constants.descriptionInsets
@@ -322,7 +329,14 @@ extension AmountViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return pickerList[row].description
+        let symbol: String = selectedAssetView.viewModel?.symbol ?? ""
+        
+        if pickerList[row] < 1 {
+            return L10n.Amount.ticketNonSelect
+        }
+        let price = amountInputView.inputViewModel?.getFormattedAmount(amount: Decimal(pickerList[row] * Constants.unitPrice))
+        let base = amountInputView.inputViewModel?.getFormattedAmount(amount: Decimal(pickerList[row] * Constants.unitBase))
+        return L10n.Amount.ticketSelectable(pickerList[row].description, symbol, price!, base!)
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
@@ -330,6 +344,18 @@ extension AmountViewController: UIPickerViewDelegate, UIPickerViewDataSource {
             self.pickerField.text = L10n.Amount.ticketNumberOf(pickerList[row].description)
         } else {
             self.pickerField.text = ""
+        }
+    }
+}
+
+extension AmountViewController: FeeViewDelegate {
+    func feeViewDidChange(_ view: FeeView) {
+        if feeView.viewModel!.isHidden {
+            feeView.titleLabel.isHidden = true
+            feeViewHeight.constant = 0.0
+        } else {
+            feeView.titleLabel.isHidden = false
+            feeViewHeight.constant = Constants.feeHeight
         }
     }
 }
