@@ -108,6 +108,7 @@ public final class CommonWalletBuilder {
 struct TransferLabel {
     static let queue = "queue"
     static let wait = "waitflag"
+    static let permit = "permitDomain"
 }
 
 extension CommonWalletBuilder: CommonWalletBuilderProtocol {

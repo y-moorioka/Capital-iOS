@@ -134,6 +134,12 @@ final class InvoiceScanPresenter {
             view?.present(message: message, animated: true)
             return
         }
+        
+        guard let str = UserDefaults.standard.string(forKey: TransferLabel.permit), receiverInfo.accountId.identifier().contains("@\(str)") else {
+            let message = L10n.InvoiceScan.Error.noInternet
+            view?.present(message: message, animated: true)
+            return
+        }
 
         switch scanState {
         case .processing(let oldReceiverInfo, let oldOperation) where oldReceiverInfo != receiverInfo:
