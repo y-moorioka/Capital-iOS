@@ -136,7 +136,7 @@ final class InvoiceScanPresenter {
         }
         
         guard let str = UserDefaults.standard.string(forKey: TransferLabel.permit), receiverInfo.accountId.identifier().contains("@\(str)") else {
-            let message = L10n.InvoiceScan.Error.noInternet
+            let message = L10n.InvoiceScan.Error.extractFail
             view?.present(message: message, animated: true)
             return
         }
