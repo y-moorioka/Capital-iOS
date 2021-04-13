@@ -62,6 +62,8 @@ final class ContactsViewController: UIViewController {
         applyStyle()
         
         presenter.setup()
+        
+        searchFieldHidden()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -106,7 +108,10 @@ final class ContactsViewController: UIViewController {
             searchField.tintColor = caretColor
         }
     }
-
+    private func searchFieldHidden() {
+        headerView.isHidden = true
+        headerView.heightAnchor.constraint(equalToConstant: 0.0).isActive = true
+    }
 }
 
 
