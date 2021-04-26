@@ -344,8 +344,10 @@ extension AmountViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if row > 0 {
             self.pickerField.text = L10n.Amount.ticketNumberOf(pickerList[row].description)
+            amountInputView.amountField.text = amountInputView.inputViewModel?.getFormattedAmount(amount: Decimal(pickerList[row] * Constants.unitPrice))
         } else {
             self.pickerField.text = ""
+            amountInputView.amountField.text = ""
         }
     }
 }
