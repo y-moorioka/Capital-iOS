@@ -233,7 +233,7 @@ extension WalletTransactionDetailsFactory: WalletTransactionDetailsFactoryProtoc
 
         var viewModels: [WalletFormViewModelProtocol] = []
 
-        populateTransactionId(into: &viewModels, data: data)
+//        populateTransactionId(into: &viewModels, data: data)
 
         populateStatus(into: &viewModels, status: data.status)
 
@@ -243,7 +243,7 @@ extension WalletTransactionDetailsFactory: WalletTransactionDetailsFactoryProtoc
 
         populateType(into: &viewModels, type: type)
 
-        populatePeer(into: &viewModels, data: data, type: type)
+//        populatePeer(into: &viewModels, data: data, type: type)
 
         populateAmount(into: &viewModels, data: data, type: type, asset: asset, feeSettings: feeSettings)
 

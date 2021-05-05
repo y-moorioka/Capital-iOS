@@ -13,7 +13,7 @@
 "common.account_share" = "私のアカウント：";
 "common.show_more" = "表示する数を増やす";
 "common.show_less" = "表示する数を減らす";
-"common.send" = "送る";
+"common.send" = "使う";
 "common.receive" = "受け取る";
 "common.next" = "次へ";
 "common.description" = "説明";
