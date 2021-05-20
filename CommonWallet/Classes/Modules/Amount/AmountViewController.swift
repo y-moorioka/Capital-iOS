@@ -82,6 +82,8 @@ final class AmountViewController: AccessoryViewController {
         amountInputView.borderedView.borderType = [.top]
         amountInputView.contentInsets = Constants.amountInsets
         amountInputView.keyboardIndicatorMode = .never
+        amountInputView.titleLabel.textColor = style.bodyTextColor
+        amountInputView.amountField.attributedPlaceholder = NSAttributedString(string: "0", attributes: [NSAttributedString.Key.foregroundColor : style.bodyTextColor])
         let amountHeight = Constants.amountHeight + Constants.amountInsets.top + Constants.amountInsets.bottom
         amountInputView.heightAnchor.constraint(equalToConstant: amountHeight).isActive = true
 
@@ -155,12 +157,11 @@ final class AmountViewController: AccessoryViewController {
         
         let label = UILabel()
         label.text = L10n.Amount.ticketTitle
-        label.textColor = style.captionTextColor
+        label.textColor = style.bodyTextColor
         label.font = style.bodyRegularFont
         
         pickerField = UITextField()
-        pickerField.placeholder = L10n.Amount.ticketPlaceHolder
-        pickerField.textColor = style.bodyTextColor
+        pickerField.attributedPlaceholder = NSAttributedString(string: L10n.Amount.ticketNonSelect, attributes: [NSAttributedString.Key.foregroundColor : style.bodyTextColor])
 
         if let caretColor = style.caretColor {
             pickerField.tintColor = caretColor
@@ -184,6 +185,8 @@ final class AmountViewController: AccessoryViewController {
         stackView.addArrangedSubview(label)
         stackView.addArrangedSubview(pickerField)
         stackView.addArrangedSubview(spacerView)
+        
+        pickerField.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
         
         return stackView
     }
