@@ -35,11 +35,11 @@ final class CardAssetCollectionViewCell: UICollectionViewCell {
                 leftRoundedView.fillColor = style.leftFillColor
                 leftRoundedView.cornerRadius = style.cornerRadius
                 symbolLabel.textColor = style.symbol.color
-                symbolLabel.font = style.symbol.font
+                symbolLabel.font = style.symbol.font.withSize(20)
                 titleLabel.textColor = style.title.color
-                titleLabel.font = style.title.font
+                titleLabel.font = style.title.font.withSize(40)
                 subtitleLabel.textColor = style.subtitle.color
-                subtitleLabel.font = style.subtitle.font
+                subtitleLabel.font = style.subtitle.font.withSize(20)
                 accessoryLabel.textColor = style.accessory.color
                 accessoryLabel.font = style.accessory.font
             }

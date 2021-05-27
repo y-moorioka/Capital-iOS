@@ -77,13 +77,19 @@ final class AmountViewController: AccessoryViewController {
         selectedAssetView.delegate = self
         selectedAssetView.borderedView.borderType = []
         selectedAssetView.heightAnchor.constraint(equalToConstant: Constants.assetHeight).isActive = true
+        selectedAssetView.titleControl.titleLabel.font = selectedAssetView.titleControl.titleLabel.font.withSize(20)
 
         amountInputView = containingFactory.createAmountInputView(for: .large)
         amountInputView.borderedView.borderType = [.top]
         amountInputView.contentInsets = Constants.amountInsets
         amountInputView.keyboardIndicatorMode = .never
         amountInputView.titleLabel.textColor = style.bodyTextColor
-        amountInputView.amountField.attributedPlaceholder = NSAttributedString(string: "0", attributes: [NSAttributedString.Key.foregroundColor : style.bodyTextColor])
+        amountInputView.titleLabel.font = amountInputView.titleLabel.font.withSize(20)
+        amountInputView.assetLabel.font = amountInputView.assetLabel.font.withSize(40)
+        amountInputView.assetLabel.textColor = .normalLinkColor
+        amountInputView.amountField.font = amountInputView.amountField.font?.withSize(40)
+        amountInputView.amountField.textColor = .normalLinkColor
+        amountInputView.amountField.attributedPlaceholder = NSAttributedString(string: "0", attributes: [NSAttributedString.Key.foregroundColor : UIColor.normalLinkColor])
         let amountHeight = Constants.amountHeight + Constants.amountInsets.top + Constants.amountInsets.bottom
         amountInputView.heightAnchor.constraint(equalToConstant: amountHeight).isActive = true
 

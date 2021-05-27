@@ -37,6 +37,7 @@ protocol WalletStyleProtocol {
     var caretColor: UIColor? { get }
     var doneIcon: UIImage? { get }
     var shareIcon: UIImage? { get }
+    var bandaiFormCellStyle: WalletFormCellStyleProtocol { get }
 }
 
 
@@ -227,6 +228,24 @@ final class WalletStyle: WalletStyleProtocol {
             return style
         } else {
             return WalletLoadingOverlayStyle.createDefault()
+        }
+    }
+    
+    var bandaiFormCellStyle: WalletFormCellStyleProtocol {
+        if let style = internalFormCellStyle {
+            return style
+        } else {
+            let title = WalletTextStyle(font: bodyRegularFont.withSize(20),
+                                        color: captionTextColor)
+            let details = WalletTextStyle(font: bodyRegularFont.withSize(30),
+                                          color: bodyTextColor)
+            let link = WalletLinkStyle(normal: .normalLinkColor,
+                                       highlighted: .highlightedLinkColor)
+
+            return WalletFormCellStyle(title: title,
+                                      details: details,
+                                      link: link,
+                                      separator: thinBorderColor)
         }
     }
 }
