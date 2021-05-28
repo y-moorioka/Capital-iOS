@@ -31,7 +31,8 @@ public struct TransactionHeaderStyle: TransactionHeaderStyleProtocol {
 
 extension TransactionHeaderStyle {
     static func createDefaultStyle(with style: WalletStyleProtocol) -> TransactionHeaderStyle {
-        return TransactionHeaderStyle(background: .white,
+        let color = UserDefaults.standard.string(forKey: TransferLabel.role)?.backgroundColor
+        return TransactionHeaderStyle(background: color!,
                                       title: WalletTextStyle(font: style.bodyRegularFont, color: .greyText),
                                       separatorColor: style.thickBorderColor)
     }

@@ -31,6 +31,8 @@ final class WalletFormItemCell: UITableViewCell, WalletFormCellProtocol {
         iconImageView.image = viewModel.icon
 
         detailsLabel.text = viewModel.details
+        detailsLabel.numberOfLines = 0
+        detailsLabel.textAlignment = .right
 
         applyDetailsColor()
     }
@@ -38,8 +40,8 @@ final class WalletFormItemCell: UITableViewCell, WalletFormCellProtocol {
     private func applyStyle() {
         if let style = style {
             titleLabel.textColor = style.title.color
-            titleLabel.font = style.title.font
-            detailsLabel.font = style.details.font
+            titleLabel.font = style.title.font.withSize(20)
+            detailsLabel.font = style.details.font.withSize(30)
         }
 
         applyDetailsColor()
@@ -61,6 +63,6 @@ final class WalletFormItemCell: UITableViewCell, WalletFormCellProtocol {
     static func calculateHeight(for viewModel: WalletFormViewModelProtocol,
                                 style: WalletFormCellStyleProtocol,
                                 preferredWidth: CGFloat) -> CGFloat {
-        return 55.0
+        return 75.0
     }
 }

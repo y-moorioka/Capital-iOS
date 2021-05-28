@@ -26,6 +26,7 @@ final class SeparatedSectionView: UIView {
 
     private func applyStyle() {
         if let style = style {
+            backgroundColor = style.background
             titleLabel.textColor = style.title.color
             titleLabel.font = style.title.font
 

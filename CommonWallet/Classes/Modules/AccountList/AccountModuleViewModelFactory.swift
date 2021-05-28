@@ -81,7 +81,8 @@ final class AccountModuleViewModelFactory {
             sendCommand = sendDecorator
         }
 
-        let sendViewModel = ActionViewModel(title: L10n.Common.send,
+        let sendTitle = UserDefaults.standard.string(forKey: TransferLabel.role)?.buttonTitle
+        let sendViewModel = ActionViewModel(title: sendTitle!,
                                             style: context.actionsStyle.sendText,
                                             command: sendCommand)
 

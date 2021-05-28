@@ -108,6 +108,35 @@ public final class CommonWalletBuilder {
 struct TransferLabel {
     static let queue = "queue"
     static let wait = "waitflag"
+    static let role = "role"
+}
+
+public enum Role: String {
+    case customer
+    case cashier
+    case administrator = "operator"
+}
+
+extension String {
+    var backgroundColor: UIColor {
+        switch self {
+        case Role.customer.rawValue:
+            return UIColor.customerBackgound
+        case Role.administrator.rawValue:
+            return UIColor.administratorBackgound
+        default:
+            return .white
+        }
+    }
+    
+    var buttonTitle: String {
+        switch self {
+        case Role.cashier.rawValue:
+            return L10n.Common.sendCashier
+        default:
+            return L10n.Common.send
+        }
+    }
 }
 
 extension CommonWalletBuilder: CommonWalletBuilderProtocol {

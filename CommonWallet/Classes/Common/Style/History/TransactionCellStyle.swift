@@ -47,7 +47,8 @@ public struct TransactionCellStyle: TransactionCellStyleProtocol {
 
 extension TransactionCellStyle {
     static func createDefaultStyle(with style: WalletStyleProtocol) -> TransactionCellStyle {
-        return TransactionCellStyle(backgroundColor: .white,
+        let color = UserDefaults.standard.string(forKey: TransferLabel.role)?.backgroundColor
+        return TransactionCellStyle(backgroundColor: color!,
                                     title: WalletTextStyle(font: style.bodyRegularFont, color: style.bodyTextColor),
                                     amount: WalletTextStyle(font: style.bodyRegularFont, color: style.bodyTextColor),
                                     statusStyleContainer: style.statusStyleContainer,

@@ -69,4 +69,12 @@ extension UIColor {
     class var highlightedLinkColor: UIColor {
         normalLinkColor.withAlphaComponent(0.5)
     }
+    
+    class var customerBackgound: UIColor {
+        UIColor(red: 253.0 / 255.0, green: 228.0 / 255.0, blue: 173.0 / 255.0, alpha: 1.0)
+    }
+    
+    class var administratorBackgound: UIColor {
+        UIColor(red: 171.0 / 255.0, green: 240.0 / 255.0, blue: 253.0 / 255.0, alpha: 1.0)
+    }
 }

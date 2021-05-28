@@ -37,7 +37,7 @@ public enum L10n {
         }
         /// number of copies
         public static var ticketPlaceHolder: String { return localize("amount.ticket_place_holder") }
-        /// %1$@: %2$@%3$@ (deposit amount: %2$@%4$@)
+        /// %1$@: %2$@%3$@ (amount: %2$@%4$@)
         public static func ticketSelectable(_ p1: String, _ p2: String, _ p3: String, _ p4: String) -> String {
             return localize("amount.ticket_selectable", p1, p2, p3, p4)
         }
@@ -118,8 +118,10 @@ public enum L10n {
         public static var receive: String { return localize("common.receive") }
         /// Search
         public static var search: String { return localize("common.search") }
-        /// Send
+        /// Use
         public static var send: String { return localize("common.send") }
+        /// Refunds and Redemption
+        public static var sendCashier: String { return localize("common.send_cashier") }
         /// Show less
         public static var showLess: String { return localize("common.show_less") }
         /// Show more

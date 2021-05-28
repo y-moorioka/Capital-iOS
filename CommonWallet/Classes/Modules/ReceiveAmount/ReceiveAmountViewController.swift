@@ -18,7 +18,7 @@ final class ReceiveAmountViewController: UIViewController, AdaptiveDesignable {
         static let expandedQrMargin: CGFloat = 10.0
         static let expandedQrBackgroundHeight: CGFloat = 351.0
         static let assetViewHeight: CGFloat = 54.0
-        static let amountViewHeight: CGFloat = 54.0
+        static let amountViewHeight: CGFloat = 70.0
         static let separatorHeight: CGFloat = 1.0
         static let expandedAdaptiveScaleWhenDecreased: CGFloat = 0.9
         static let inputButtonHeight: CGFloat = 33.0
@@ -118,6 +118,12 @@ final class ReceiveAmountViewController: UIViewController, AdaptiveDesignable {
 
         amountInputView = containingFactory.createAmountInputView(for: .small)
         amountInputView.titleLabel.text = L10n.Amount.receive
+        amountInputView.titleLabel.font = amountInputView.titleLabel.font.withSize(20)
+        amountInputView.assetLabel.font = amountInputView.assetLabel.font.withSize(40)
+        amountInputView.assetLabel.textColor = .normalLinkColor
+        amountInputView.amountField.font = amountInputView.amountField.font?.withSize(40)
+        amountInputView.amountField.textColor = .normalLinkColor
+        amountInputView.amountField.attributedPlaceholder = NSAttributedString(string: "0", attributes: [NSAttributedString.Key.foregroundColor : UIColor.normalLinkColor])
         amountInputView.borderedView.borderType = [.top]
         amountInputView.contentInsets = UIEdgeInsets(top: Constants.verticalSpacing, left: 0.0,
                                                      bottom: Constants.bottomMargin, right: 0.0)

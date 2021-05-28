@@ -47,7 +47,9 @@ extension HistoryViewStyle {
                              in: Bundle(for: WalletStyle.self),
                              compatibleWith: nil)
 
-        return HistoryViewStyle(fillColor: .white,
+        let color = UserDefaults.standard.string(forKey: TransferLabel.role)?.backgroundColor
+        
+        return HistoryViewStyle(fillColor: color!,
                                 borderStyle: WalletStrokeStyle(color: .border, lineWidth: 1.0),
                                 cornerRadius: 10.0,
                                 titleStyle: WalletTextStyle(font: style.header4Font, color: style.headerTextColor),

@@ -14,6 +14,7 @@
 "common.show_more" = "Show more";
 "common.show_less" = "Show less";
 "common.send" = "Use";
+"common.send_cashier" = "Refunds and Redemption";
 "common.receive" = "Receive";
 "common.next" = "Next";
 "common.description" = "Description";
