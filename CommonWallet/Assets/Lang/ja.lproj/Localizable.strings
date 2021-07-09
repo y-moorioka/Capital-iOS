@@ -109,3 +109,7 @@
 "amount.ticket_selectable" = "%1$@: %2$@%3$@ (入金額: %2$@%4$@)";
 "status.text_pending" = "受け付けました";
 "status.text_rejected" = "失敗しました";
+"notify.confirm_title" = "通知許可の確認";
+"notify.confirm_description" = "磐梯デジとくは通知を送信します。\n通知をする場合、設定で許可してください。";
+"notify.confirm_no" = "設定しない";
+"notify.confirm_yes" = "設定する";

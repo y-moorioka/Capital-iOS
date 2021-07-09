@@ -12,6 +12,8 @@ final class ActionsCollectionViewCell: UICollectionViewCell {
     @IBOutlet private var separatorView: UIView!
 
     private(set) var actionsViewModel: ActionsViewModelProtocol?
+    
+    weak var delegate: AlertPresentable?
 
     override func prepareForReuse() {
         super.prepareForReuse()
@@ -21,7 +23,15 @@ final class ActionsCollectionViewCell: UICollectionViewCell {
 
     @IBAction private func actionSend() {
         if let actionsViewModel = actionsViewModel {
-            try? actionsViewModel.send.command.execute()
+            self.delegate?.showAlert(title: L10n.Notify.confirmTitle, message: L10n.Notify.confirmDescription, actions: [(L10n.Notify.confirmNo, .cancel), (L10n.Notify.confirmYes, .default)], completion: { Int in
+                if Int == 0 {
+                    try? actionsViewModel.send.command.execute()
+                } else {
+                    if #available(iOS 10.0, *) {
+                        UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!, options: [:], completionHandler: nil)
+                    }
+                }
+            })
         }
     }
 

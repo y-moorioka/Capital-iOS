@@ -157,6 +157,10 @@ extension AccountListViewController: UICollectionViewDataSource {
         //swiftlint:disable:next force_cast
         let walletCell = cell as! WalletViewProtocol
         walletCell.bind(viewModel: viewModel)
+        
+        if let actionCell = cell as? ActionsCollectionViewCell {
+            actionCell.delegate = self
+        }
 
         return cell
     }
@@ -265,3 +269,5 @@ extension AccountListViewController: Reloadable {
         presenter.reload()
     }
 }
+
+extension AccountListViewController: AlertPresentable {}

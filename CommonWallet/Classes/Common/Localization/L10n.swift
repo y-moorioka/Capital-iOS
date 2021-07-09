@@ -223,6 +223,17 @@ public enum L10n {
         }
     }
 
+    public enum Notify {
+        /// Bandai Digital will send you a notification.\nIf you want to be notified, please allow it in the settings.
+        public static var confirmDescription: String { return localize("notify.confirm_description") }
+        /// No setting
+        public static var confirmNo: String { return localize("notify.confirm_no") }
+        /// Confirmation of notification permission
+        public static var confirmTitle: String { return localize("notify.confirm_title") }
+        /// Set it up.
+        public static var confirmYes: String { return localize("notify.confirm_yes") }
+    }
+
     public enum Receive {
         /// Can't generate QR code
         public static var errorQrGeneration: String { return localize("receive.error_qr_generation") }
