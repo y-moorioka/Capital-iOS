@@ -100,6 +100,10 @@ struct AccountListViewModelFactoryContainer {
             actionsIndex -= 1
         }
     }
+    
+    mutating func append(viewModelFactory: @escaping WalletViewModelFactory) throws {
+        viewModelFactories.append(viewModelFactory)
+    }
 }
 
 struct AccountListViewModelContext: AccountListViewModelContextProtocol {

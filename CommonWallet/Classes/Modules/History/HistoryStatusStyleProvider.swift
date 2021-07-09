@@ -29,4 +29,17 @@ final class HistoryStatusStyleProvider: TransactionStatusDesignable {
             return style.statusStyleContainer.rejected.icon
         }
     }
+    
+    func fetchText(for status: AssetTransactionStatus,
+                   incoming: Bool,
+                   style: TransactionCellStyleProtocol) -> String? {
+        switch status {
+        case .commited:
+            return nil
+        case .pending:
+            return L10n.Status.textPending
+        case .rejected:
+            return L10n.Status.textRejected
+        }
+    }
 }

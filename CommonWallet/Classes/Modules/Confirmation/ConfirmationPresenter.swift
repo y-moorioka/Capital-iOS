@@ -45,7 +45,7 @@ final class ConfirmationPresenter {
     private func handleTransfer(result: Result<Void, Error>) {
         switch result {
         case .success:
-            eventCenter.notify(with: TransferCompleteEvent(payload: payload))
+//            eventCenter.notify(with: TransferCompleteEvent(payload: payload))
             if #available(iOS 10.0, *) {
                 let semaphore = DispatchSemaphore(value: 0)
                 UNUserNotificationCenter.current().getNotificationSettings { settings in
@@ -58,12 +58,11 @@ final class ConfirmationPresenter {
                 }
                 semaphore.wait()
                 
+                view?.didStartLoading()
                 if self.notifyAuth && UserDefaults.standard.object(forKey: TransferLabel.wait) != nil {
-                    view?.didStartLoading()
                     UserDefaults.standard.setValue(1, forKey: TransferLabel.wait)
                     
                     let queue = DispatchQueue(label: TransferLabel.queue)
-//                    let notifySemaphore = DispatchSemaphore(value: 0)
                     queue.async { [weak self] in
                         for i in 0...5 {
                             Thread.sleep(forTimeInterval: 1.0)
@@ -71,18 +70,19 @@ final class ConfirmationPresenter {
                             if UserDefaults.standard.integer(forKey: TransferLabel.wait) == 0 || i == 5 {
                                 DispatchQueue.main.async {
                                     self?.view?.didStopLoading()
+                                    if i == 5 {
+                                        eventCenter.notify(with: TransferCompleteEvent(payload: payload))
+                                    }
                                     self?.coordinator.dismiss()
                                 }
-//                                notifySemaphore.signal()
                                 break
                             }
                         }
-//                    notifySemaphore.wait()
-//
-//                    view?.didStopLoading()
-//                    coordinator.dismiss()
                     }
                 } else {
+                    Thread.sleep(forTimeInterval: 1.0)
+                    self?.view?.didStopLoading()
+                    eventCenter.notify(with: TransferCompleteEvent(payload: payload))
                     coordinator.dismiss()
                 }
             } else {

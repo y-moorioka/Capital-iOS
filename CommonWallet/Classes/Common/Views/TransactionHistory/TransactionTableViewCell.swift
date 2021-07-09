@@ -51,7 +51,7 @@ final class TransactionTableViewCell: UITableViewCell {
             amountLabel.text = viewModel.amount
             createdAtLabel.text = viewModel.timestamp
 
-            apply(icon: viewModel.icon)
+//            apply(icon: viewModel.icon)
             applyIncomingIcon()
             applyStatusStyle()
         }
@@ -59,12 +59,19 @@ final class TransactionTableViewCell: UITableViewCell {
 
     private func applyIncomingIcon() {
         if let viewModel = viewModel {
-            if viewModel.incoming, let icon = style?.increaseAmountIcon {
-                signImageView.image = icon
+//            if viewModel.incoming, let icon = style?.increaseAmountIcon {
+//                signImageView.image = icon
+//            }
+//
+//            if !viewModel.incoming, let icon = style?.decreaseAmountIcon {
+//                signImageView.image = icon
+//            }
+            if viewModel.incoming {
+                amountLabel.text = "+ \(amountLabel.text!)"
             }
-
-            if !viewModel.incoming, let icon = style?.decreaseAmountIcon {
-                signImageView.image = icon
+            
+            if !viewModel.incoming {
+                amountLabel.text = "- \(amountLabel.text!)"
             }
         }
     }
@@ -75,15 +82,21 @@ final class TransactionTableViewCell: UITableViewCell {
                                                                    incoming: viewModel.incoming,
                                                                    style: style)
 
-            statusImageView.image = statusStyleProvider.fetchIcon(for: viewModel.status,
-                                                                  incoming: viewModel.incoming,
-                                                                  style: style)
+//            statusImageView.image = statusStyleProvider.fetchIcon(for: viewModel.status,
+//                                                                  incoming: viewModel.incoming,
+//                                                                  style: style)
+            if let str = statusStyleProvider.fetchText(for: viewModel.status, incoming: viewModel.incoming, style: style) {
+                amountLabel.text = "\(str)：\(amountLabel.text!)"
+            }
         }
     }
 
     private func applyStyle() {
         if let style = style {
             backgroundColor = style.backgroundColor
+            
+            signImageView.isHidden = true
+            statusImageView.isHidden = true
 
             titleLabel.textColor = style.title.color
             titleLabel.font = style.title.font

@@ -64,4 +64,7 @@ public protocol AccountListModuleBuilderProtocol: class {
 
     @discardableResult
     func with(minimumContentHeight: CGFloat) -> Self
+    
+    @discardableResult
+    func appending(viewModelFactory: @escaping WalletViewModelFactory) throws -> Self
 }

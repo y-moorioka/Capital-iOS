@@ -237,6 +237,10 @@ public enum L10n {
         public static var rejected: String { return localize("status.rejected") }
         /// Success
         public static var success: String { return localize("status.success") }
+        /// Accepted
+        public static var textPending: String { return localize("status.text_pending") }
+        /// Failed
+        public static var textRejected: String { return localize("status.text_rejected") }
         /// Status
         public static var title: String { return localize("status.title") }
     }

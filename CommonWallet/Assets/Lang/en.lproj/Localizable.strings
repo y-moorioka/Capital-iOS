@@ -107,3 +107,5 @@
 "amount.top_title" = "Send Money";
 "amount.ticket_non_select" = "Please select";
 "amount.ticket_selectable" = "%1$@: %2$@%3$@ (amount: %2$@%4$@)";
+"status.text_pending" = "Accepted";
+"status.text_rejected" = "Failed";

@@ -107,3 +107,5 @@
 "amount.top_title" = "お金を送る";
 "amount.ticket_non_select" = "選択してください";
 "amount.ticket_selectable" = "%1$@: %2$@%3$@ (入金額: %2$@%4$@)";
+"status.text_pending" = "受け付けました";
+"status.text_rejected" = "失敗しました";

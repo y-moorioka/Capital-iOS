@@ -188,4 +188,9 @@ extension AccountListModuleBuilder: AccountListModuleBuilderProtocol {
         self.minimumContentHeight = minimumContentHeight
         return self
     }
+    
+    func appending(viewModelFactory: @escaping WalletViewModelFactory) throws -> Self {
+        try viewModelFactoryContainer.append(viewModelFactory: viewModelFactory)
+        return self
+    }
 }
