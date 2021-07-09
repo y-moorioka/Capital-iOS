@@ -71,7 +71,7 @@ final class ConfirmationPresenter {
                                 DispatchQueue.main.async {
                                     self?.view?.didStopLoading()
                                     if i == 5 {
-                                        eventCenter.notify(with: TransferCompleteEvent(payload: payload))
+                                        self?.eventCenter.notify(with: TransferCompleteEvent(payload: self!.payload))
                                     }
                                     self?.coordinator.dismiss()
                                 }
@@ -81,7 +81,7 @@ final class ConfirmationPresenter {
                     }
                 } else {
                     Thread.sleep(forTimeInterval: 1.0)
-                    self?.view?.didStopLoading()
+                    view?.didStopLoading()
                     eventCenter.notify(with: TransferCompleteEvent(payload: payload))
                     coordinator.dismiss()
                 }
