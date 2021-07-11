@@ -26,7 +26,7 @@ final class ActionsCollectionViewCell: UICollectionViewCell {
         if let actionsViewModel = actionsViewModel {
             notifyCheck()
             if !notifyAuth {
-                self.delegate?.showAlert(title: L10n.Notify.confirmTitle, message: L10n.Notify.confirmDescription, actions: [(L10n.Notify.confirmNo, .cancel), (L10n.Notify.confirmYes, .default)], completion: { Int in
+                self.delegate?.showAlert(title: L10n.Notify.confirmTitle, message: L10n.Notify.confirmDescription(Bundle.main.object(forInfoDictionaryKey: "CFBundleDisplayName") as! String), actions: [(L10n.Notify.confirmNo, .cancel), (L10n.Notify.confirmYes, .default)], completion: { Int in
                     if Int == 0 {
                         try? actionsViewModel.send.command.execute()
                     } else {

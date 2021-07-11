@@ -224,8 +224,10 @@ public enum L10n {
     }
 
     public enum Notify {
-        /// Bandai Digital will send you a notification.\nIf you want to be notified, please allow it in the settings.
-        public static var confirmDescription: String { return localize("notify.confirm_description") }
+        /// %@ sends notifications.\nIf you want to be notified, please allow it in the settings.
+        public static func confirmDescription(_ p1: String) -> String {
+            return localize("notify.confirm_description", p1)
+        }
         /// No setting
         public static var confirmNo: String { return localize("notify.confirm_no") }
         /// Confirmation of notification permission
