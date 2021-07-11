@@ -109,7 +109,7 @@
 "amount.ticket_selectable" = "%1$@: %2$@%3$@ (amount: %2$@%4$@)";
 "status.text_pending" = "Accepted";
 "status.text_rejected" = "Failed";
-"notify.confirm_title" = "Confirmation of notification permission";
-"notify.confirm_description" = "%@ sends notifications.\nIf you want to be notified, please allow it in the settings.";
+"notify.confirm_title" = "Request for Notification Permission";
+"notify.confirm_description" = "\n%@ will send you a notification when the money transfer is complete.\nTo receive notifications, please allow it by clicking \"Set it up\" below.";
 "notify.confirm_no" = "No setting";
 "notify.confirm_yes" = "Set it up.";
