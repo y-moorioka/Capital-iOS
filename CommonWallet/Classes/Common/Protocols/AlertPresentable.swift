@@ -11,6 +11,11 @@ protocol AlertPresentable: class {
                    message: String,
                    actions: [(String, UIAlertAction.Style)],
                    completion: @escaping (_ index: Int) -> Void)
+    func showAlert(title: String,
+                   message: String,
+                   actions: [(String, UIAlertAction.Style)],
+                   mode: Int,
+                   completion: @escaping (_ index: Int) -> Void)
 }
 
 extension AlertPresentable {
@@ -30,6 +35,34 @@ extension AlertPresentable where Self: ControllerBackedProtocol {
                    completion: @escaping (_ index: Int) -> Void) {
 
         let alertViewController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        for (index, (title, style)) in actions.enumerated() {
+            let alertAction = UIAlertAction(title: title, style: style) { (_) in
+                completion(index)
+            }
+            alertViewController.addAction(alertAction)
+        }
+
+        controller.present(alertViewController, animated: true, completion: nil)
+    }
+    
+    func showAlert(title: String,
+                   message: String,
+                   actions: [(String, UIAlertAction.Style)],
+                   mode: Int,
+                   completion: @escaping (_ index: Int) -> Void) {
+        let alertViewController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.alignment = .left
+        let messageText = NSAttributedString(
+            string: message,
+            attributes: [
+                NSAttributedString.Key.paragraphStyle: paragraphStyle
+            ]
+        )
+
+        alertViewController.setValue(messageText, forKey: "attributedMessage")
+        
         for (index, (title, style)) in actions.enumerated() {
             let alertAction = UIAlertAction(title: title, style: style) { (_) in
                 completion(index)
