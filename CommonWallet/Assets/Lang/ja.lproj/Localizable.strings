@@ -110,6 +110,6 @@
 "status.text_pending" = "受け付けました";
 "status.text_rejected" = "失敗しました";
 "notify.confirm_title" = "通知許可のお願い";
-"notify.confirm_description" = "%@は、送金完了の通知を送信します。\n通知を受け取るには、下記の「設定する」から、許可をお願いします。";
+"notify.confirm_description" = "\n%@は、送金完了の通知を送信します。\n通知を受け取るには、下記の「設定する」から、許可をお願いします。";
 "notify.confirm_no" = "設定しない";
 "notify.confirm_yes" = "設定する";
