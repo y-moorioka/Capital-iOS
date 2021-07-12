@@ -26,7 +26,8 @@ final class ActionsCollectionViewCell: UICollectionViewCell {
         if let actionsViewModel = actionsViewModel {
             notifyCheck()
             if !notifyAuth {
-                self.delegate?.showAlert(title: L10n.Notify.confirmTitle, message: L10n.Notify.confirmDescription(Bundle.main.object(forInfoDictionaryKey: "CFBundleDisplayName") as! String), actions: [(L10n.Notify.confirmNo, .default), (L10n.Notify.confirmYes, .cancel)], mode: 0, completion: { Int in
+                let name = Bundle.main.object(forInfoDictionaryKey: "CFBundleDisplayName") as? String ?? ""
+                self.delegate?.showAlert(title: L10n.Notify.confirmTitle, message: L10n.Notify.confirmDescription(name.getAppName()), actions: [(L10n.Notify.confirmNo, .default), (L10n.Notify.confirmYes, .cancel)], mode: 0, completion: { Int in
                     if Int == 0 {
                         try? actionsViewModel.send.command.execute()
                     } else {
@@ -83,4 +84,14 @@ extension ActionsCollectionViewCell: WalletViewProtocol {
             semaphore.wait()
         }
     }
+}
+
+extension String {
+    func getAppName() -> String {
+            return replacingOccurrences(
+                of: "^(.+)(【[^【】]*】)$",
+                with: "$1",
+                options: .regularExpression,
+                range: self.range(of: self))
+        }
 }
