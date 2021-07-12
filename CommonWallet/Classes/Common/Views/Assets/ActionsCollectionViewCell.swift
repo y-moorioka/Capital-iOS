@@ -89,8 +89,8 @@ extension ActionsCollectionViewCell: WalletViewProtocol {
 extension String {
     func getAppName() -> String {
             return replacingOccurrences(
-                of: "^(.+)(【[^【】]*】)$",
-                with: "$1",
+                of: "【[^【】]*】",
+                with: "",
                 options: .regularExpression,
                 range: self.range(of: self))
         }
